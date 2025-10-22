@@ -66,7 +66,7 @@ async function run() {
     });
 
     // UPDATE a channel
-    app.put("/:id", async (req, res) => {
+    app.put("/:id", verifyToken, async (req, res) => {
       const { id } = req.params;
       const { name, group, logo, url } = req.body;
 
@@ -115,7 +115,11 @@ async function run() {
 
       res.json({ message: "User saved", user: result });
     });
-
+    // user get
+    app.get("/users", async (req, res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result);
+    });
     // Ping MongoDB to verify connection
     await client.db("admin").command({ ping: 1 });
     console.log("Connected to MongoDB successfully!");
