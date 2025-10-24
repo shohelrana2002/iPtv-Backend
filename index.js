@@ -6,8 +6,13 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 4000;
-
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
+// app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
@@ -230,13 +235,14 @@ async function run() {
       }
     );
     // Ping MongoDB to verify connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     // console.log("Connected to MongoDB successfully!");
+    module.exports = app;
   } catch (err) {}
 }
 
 run().catch(console.dir);
 
-app.listen(port, () => {
-  console.log(`✅ Server running on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`✅ Server running on port ${port}`);
+// });
