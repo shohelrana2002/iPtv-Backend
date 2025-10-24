@@ -65,6 +65,7 @@ const verifyAdmin = async (req, res, next) => {
 async function run() {
   try {
     await client.connect();
+
     // Generate JWT token
     app.post("/jwt", async (req, res) => {
       const { email } = req.body;
@@ -75,6 +76,7 @@ async function run() {
       });
       res.json({ token });
     });
+
     // GET all channels
     app.get("/", async (req, res) => {
       const result = await ipTvCollection.find().toArray();
@@ -229,10 +231,8 @@ async function run() {
     );
     // Ping MongoDB to verify connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Connected to MongoDB successfully!");
-  } catch (err) {
-    console.error(err);
-  }
+    // console.log("Connected to MongoDB successfully!");
+  } catch (err) {}
 }
 
 run().catch(console.dir);
