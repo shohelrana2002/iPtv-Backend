@@ -34,16 +34,28 @@ const cookieOptions = {
 let client;
 let clientPromise;
 
+// const getClient = async () => {
+//   if (!clientPromise) {
+//     const uri = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.6zoig.mongodb.net/?retryWrites=true&w=majority`;
+//     client = new MongoClient(uri);
+//     clientPromise = client.connect();
+//   }
+//   await clientPromise;
+//   return client;
+// };
 const getClient = async () => {
-  if (!clientPromise) {
-    const uri = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.6zoig.mongodb.net/?retryWrites=true&w=majority`;
-    client = new MongoClient(uri);
-    clientPromise = client.connect();
+  try {
+    if (!clientPromise) {
+      const uri = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.6zoig.mongodb.net/?retryWrites=true&w=majority`;
+      client = new MongoClient(uri);
+      clientPromise = client.connect();
+    }
+    await clientPromise;
+    return client;
+  } catch (err) {
+    console.error("Mongo connection error:", err);
   }
-  await clientPromise;
-  return client;
 };
-
 // Middleware: verify JWT
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
