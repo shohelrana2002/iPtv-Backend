@@ -105,10 +105,6 @@ app.get("/", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-app.get("/", async (req, res) => {
-  console.log("hi");
-  res.send("Server is running...");
-});
 
 app.post("/", verifyToken, verifyAdmin, async (req, res) => {
   try {
