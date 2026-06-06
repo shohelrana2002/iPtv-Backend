@@ -14,6 +14,7 @@ app.use(
       "http://localhost:5173",
       "https://authenticationproject-750f2.web.app",
       "https://authenticationproject-750f2.firebaseapp.com",
+      "https://shtv.unaux.com"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
